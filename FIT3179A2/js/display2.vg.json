@@ -1,0 +1,39 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Comparison of crime rates in different countries (can slide)",
+    "width": "container",
+    "height": "container",
+    "data": {
+        "url": "./data/countries-by-intentional-homicide-rate.csv"
+    },
+    "transform": [
+        {
+            "window": [{"op": "rank", "as": "rank"}],
+            "sort": [{"field": "Rate", "order": "descending"}]
+        },
+        {
+            "filter": "(datum.rank >= sliderValue) && (datum.rank < sliderValue + 15)"
+        }
+    ],
+    "mark": "bar",
+    "encoding": {
+        "x": {"field": "Country", "type": "ordinal", "sort": {"field": "Rate", "order": "descending"}, "axis": {"labelAngle": -45}},
+        "y": {"field": "Rate", "type": "quantitative"},
+        "color": {
+            "field": "Rate",
+            "type": "quantitative",
+            "scale": {
+                "domain": [0, 50], 
+                "range": ["lightblue", "steelblue"]
+            },
+            "legend": {
+                "title": "Homicide Rate"
+            }
+        }
+    },
+    "params": [{
+        "name": "sliderValue",
+        "value": 1,
+        "bind": {"input": "range", "min": 1, "max": 185, "step": 1}
+    }]
+}
