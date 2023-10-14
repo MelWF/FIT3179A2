@@ -1,0 +1,37 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Scatter plot about year",
+    "data": {
+        "url": "./data/countries-by-intentional-homicide-rate.csv"
+    },
+    "mark": "circle",
+    "width": "container",
+    "height": "container",
+    "encoding": {
+        "x": {
+            "field": "Year",
+            "type": "ordinal",
+            "title": "Year"
+        },
+        "y": {
+            "field": "Rate",
+            "type": "quantitative",
+            "title": "Homicide Rate"
+        },
+        "color": {
+            "field": "Rate",
+            "type": "quantitative",
+            "scale": {
+                "range": ["blue", "red"]
+            },
+            "legend": {
+                "title": "Homicide Rate Intensity"
+            }
+        },
+        "tooltip": [
+            {"field": "Country", "type": "nominal"},
+            {"field": "Rate", "type": "quantitative"},
+            {"field": "Year", "type": "ordinal"}
+        ]
+    }
+}

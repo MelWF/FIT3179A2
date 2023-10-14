@@ -1,0 +1,29 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": "container",
+    "data": {
+        "url": "./data/countries-by-intentional-homicide-rate.csv"
+    },
+    "transform": [
+        {"sort": [{"field": "Rate", "order": "ascending"}]},
+        {"window": [{"op": "row_number", "as": "rank"}]},
+        {"filter": "datum.Rate > 30"}
+    ],
+    "mark": "bar",
+    "encoding": {
+        "x": {"field": "Country", "type": "ordinal", "sort": "-y", "axis": {"labelAngle": -45}},
+        "y": {"field": "Rate", "type": "quantitative"},
+        "color": {
+            "field": "Rate",
+            "type": "quantitative",
+            "scale": {
+                "domain": [50, 30],  
+                "range": ["steelblue", "lightblue"]
+            },
+            "legend": {
+                "title": "Homicide Rate"
+            }
+        }
+    }
+}

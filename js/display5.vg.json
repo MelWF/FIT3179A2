@@ -1,0 +1,47 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Total Homicide Rate by Region and Year",
+  "width": "container",
+  "height": "container",
+  "data": {
+    "url": "./data/countries-by-intentional-homicide-rate.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+  "transform": [
+    {
+      "aggregate": [
+        {
+          "op": "sum",
+          "field": "Rate",
+          "as": "Total_Rate"
+        }
+      ],
+      "groupby": ["Region", "Year"]
+    }
+  ],
+  "mark": "rect",
+  "encoding": {
+    "x": {
+      "field": "Year",
+      "type": "ordinal",
+      "axis": {"title": "Year"}
+    },
+    "y": {
+      "field": "Region",
+      "type": "nominal",
+      "axis": {"title": "Region"}
+    },
+    "color": {
+      "field": "Total_Rate",
+      "type": "quantitative",
+      "scale": {
+        "scheme": "viridis"
+      },
+      "legend": {
+        "title": "Total Homicide Rate"
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Pie of the region",
+    "width": "container",
+    "height": "container",
+    "data": {
+        "url": "./data/countries-by-intentional-homicide-rate.csv"
+    },
+    "transform": [{
+        "aggregate": [{"op": "count", "as": "num_countries"}],
+        "groupby": ["Region"]
+    }, {
+        "calculate": "datum.num_countries / 185 * 100",
+        "as": "percentage"
+    }],
+    "mark": "arc",
+    "encoding": {
+        "theta": {"field": "num_countries", "type": "quantitative"},
+        "color": {"field": "Region", "type": "nominal"},
+        "tooltip": [
+            {"field": "Region", "type": "nominal", "title": "Region"},
+            {"field": "num_countries", "type": "quantitative", "title": "Number of Countries"},
+            {"field": "percentage", "type": "quantitative", "title": "Percentage", "format": ".2f"}
+        ]
+    }
+}
+
+

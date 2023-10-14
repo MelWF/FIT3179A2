@@ -1,8 +1,8 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": "Display 1",
-    "width": 1000,
-    "height":800,
+    "title": "Map of world crime",
+    "width": "container",
+    "height": "container",    
     "data": {
         "url": "./data/countries-by-intentional-homicide-rate.csv",
         "format": {
@@ -24,32 +24,58 @@
             }
         }
     ],
-    "projection": {
-        "type": "identity",
-        "reflectY": true
-    },
-    "mark": "circle",
-    "encoding": {
-        "longitude": {
-            "field": "longitude",
-            "type": "quantitative"
+    "layer": [
+        {
+            "data": {
+                "url": "https://vega.github.io/vega/data/world-110m.json",
+                "format": {
+                    "type": "topojson",
+                    "feature": "countries"
+                }
+            },
+            "projection": {
+                "type": "mercator"
+            },
+            "mark": {
+                "type": "geoshape",
+                "fill": "#e5e5e5",
+                "stroke": "#666",
+                "strokeWidth": 0.5
+            }
         },
-        "latitude": {
-            "field": "latitude",
-            "type": "quantitative"
-        },
-        "size": {
-            "field": "Rate",
-            "type": "quantitative",
-            "title": "Homicide Rate"
-        },
-        "color": {
-            "field": "Rate",
-            "type": "quantitative"
-        },
-        "tooltip": [
-            { "field": "Country", "type": "nominal" },
-            { "field": "Rate", "type": "quantitative" }
-        ]
-    }
+        {
+            "projection": {
+                "type": "mercator"
+            },
+            "mark": "circle",
+            "encoding": {
+                "longitude": {
+                    "field": "longitude",
+                    "type": "quantitative"
+                },
+                "latitude": {
+                    "field": "latitude",
+                    "type": "quantitative"
+                },
+                "size": {
+                    "field": "Rate",
+                    "type": "quantitative",
+                    "title": "Homicide Rate"
+                },
+                "color": {
+                    "field": "Rate",
+                    "type": "quantitative",
+                    "scale": {
+                        "scheme": "reds"
+                    }
+                },
+                "tooltip": [
+                    { "field": "Country", "type": "nominal" },
+                    { "field": "Rate", "type": "quantitative" }
+                ]
+            }
+        }
+    ]
 }
+
+

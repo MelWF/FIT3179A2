@@ -5,21 +5,114 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>World Crime Visualization</title>
-
     <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-    <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css">
 </head>
 
 <body>
+    
+    <h1 class="header-title">Visualising World Crime Rate</h1>
+    <div class="separator-line"></div>
+    <h1 class="header-title2">Visualizing the crime situation in different countries around the world is a topic of our interest</h1>
+    <p class="vis-description">The visualisation domain revolves around intentional homicide rates across different countries. The data is pivotal for policymakers, law enforcement agencies, and researchers who aim to understand the reasons behind crime trends and to strategize effective countermeasures.</p>
+    <p class="vis-description"></p>The visualization is structured in a single column layout, with graphics displayed from top to bottom. This design allows users to scroll through the data easily and comfortably. And this design ensures users can first focus on the data and then interact using the slider.
+In most visualizations, Countries were listed on the X-axis and the rate on the Y-axis for intuitive understanding.</p>
 
-    <div id="vis" class="container"></div>
+
+
+    <div class="separator-line"></div>
+    <p class="des2">Map of crime rates in major countries in the world</p>
+    <p class="vis-description">The use of visualization in map format is very important, especially for the visualization scenarios of the current world crime situation. It allows users to intuitively view the world map and also see the crime rate statistics of each country.We can clearly see that the crime rate situation in Central America and Africa is relatively serious</p>
+    <div id="map-vis" class="vis-container"></div>
+
+
+    <div class="separator-line"></div>
+    <p class="des2">Comparison of crime rates in different countries</p>
+    <p id = "slider" class="vis-description">Here you can clearly compare the crime rates of various countries, you can slide.The bar chart idiom was chosen because of its clarity in depicting quantitative values across categories. By using a bar chart, users can easily compare homicide rates across countries.</p>
+    <p id = "slider" class="vis-description">One standout feature is the interactive slider that lets users focus on specific ranges of the data. This aids in targeted analysis and avoids overwhelming users with information.</p>
+    <div id="bar-vis" class="vis-container"></div>
+    <p class="vis-description">Countries with crime rates over 30 deserve our focus.Through the data form of histogram structure, we can focus on the values with the highest crime rates to understand the specific crime rates in these countries.</p>
+    <div id="bar-vis2" class="vis-container"></div>
+
+
+    <div class="separator-line"></div>
+    <p class="des2">Which regions have more countries?</p>
+    <p class="vis-description">After seeing the specific numerical information, we will want to know the intuitive percentage information. If all the data is 100%, then what is the proportion of some data that I am interested in? Therefore pie chart is very necessary
+    </p>
+    <p class="vis-description">I used pie chart data to compare the number of countries in different continents. This format is very suitable for comparison of percentages.Visually display the number of countries in different continents in statistics</p>
+    <div id="pie-vis" class="vis-container"></div>
+
+
+    <div class="separator-line"></div>
+    <p class="des2">How about time? We need to know the trends</p>
+    <p class="vis-description">It is important to pay attention to annual trends in global crime rates</p>
+    <div id="line-vis" class="vis-container"></div>
+
+    <div class="separator-line"></div>
+    <p class="des2">Total Homicide Rate by Region and Year</p>
+    <p class="vis-description">Heatmaps allow clear comparison of data from different years for each continent.It is very important for data visualization in two-dimensional formats, which is also an important reason why I chose heat maps.</p>
+    <div id="area-vis" class="vis-container"></div>
+
+
+    <div class="separator-line"></div>
+    <p class="des2">Pay attention to the crime rate interval information of most countries</p>
+    <p class="vis-description">You can intuitively understand the distribution of crime rates.It is gratifying to know that most of the country's crime rates douiweiyu</p>
+    <div id="histogram-vis" class="vis-container"></div>
+
+    <div class="separator-line"></div>
+    <p class="des2">Scatter plot about year</p>
+    <p class="vis-description">As can be seen from the scatter plot, the crime rate may have been on the rise in recent years.</p>
+    <div id="scatter-vis" class="vis-container"></div>
+
+    
+    
 
     <script type="text/javascript">
-        const spec = "js/display1.vg.json";
-        vegaEmbed('#vis', spec);
+        const mapSpec = "js/display1.vg.json";
+        const barSpec = "js/display2.vg.json";
+        const barSpec2 = "js/display2-2.vg.json";
+        const pieSpec = "js/display3.vg.json";
+        const lineSpec = "js/display4.vg.json";
+        const areaSpec = "js/display5.vg.json";
+        const histogramSpec = "js/display6.vg.json";
+        const scatterSpec = "js/display7.vg.json";
+
+        vegaEmbed('#bar-vis', barSpec, {
+            actions: false,
+            defaultStyle: false,
+        }).then((result) => {
+            const slider = document.createElement('input');
+            slider.type = 'range';
+            slider.min = 0;
+            slider.max = result.view.data('source_0').length - 15;
+            slider.step = 1;
+            slider.style.width = '300px';
+            slider.addEventListener('input', () => {
+                const start = +slider.value;
+                const end = start + 15;
+                result.view.signal('brush', [[start, end]]).run();
+            });
+
+        });
+
+        vegaEmbed('#bar-vis2', barSpec2, {
+            actions: false,
+            defaultStyle: false,
+        }).then((result) => {
+        });
+
+        
+        vegaEmbed('#map-vis', mapSpec);
+        vegaEmbed('#pie-vis', pieSpec);
+        vegaEmbed('#line-vis', lineSpec);
+        vegaEmbed('#area-vis', areaSpec);
+        vegaEmbed('#histogram-vis', histogramSpec);
+        vegaEmbed('#scatter-vis', scatterSpec);
+
+
 
     </script>
 </body>

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Total Homicide Rate Sum Over Years",
+  "width": "container",
+  "height": "container",
+  "data": {
+    "url": "./data/countries-by-intentional-homicide-rate.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+  "transform": [
+    {
+      "aggregate": [
+        {
+          "op": "sum",
+          "field": "Rate",
+          "as": "Total_Rate"
+        }
+      ],
+      "groupby": ["Year"]
+    }
+  ],
+  "mark": "line",
+  "encoding": {
+    "x": {
+      "field": "Year",
+      "type": "ordinal",
+      "axis": {"title": "Year"}
+    },
+    "y": {
+      "field": "Total_Rate",
+      "type": "quantitative",
+      "axis": {"title": "Total Homicide Rate"}
+    }
+  }
+}
